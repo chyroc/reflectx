@@ -13,19 +13,17 @@ func ToInt64(v reflect.Value) (int64, error) {
 	switch v.Kind() {
 	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
 		return v.Int(), nil
+	case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32:
+		return int64(v.Uint()), nil
 	}
 	return 0, fmt.Errorf("value(%v) of kind(%s) can not convert to int64", v.Interface(), v.Kind())
 }
 
-func ToBool(rv reflect.Value) bool {
-	var v uint64
-	if IsUnsignedInt(rv) {
-		v = rv.Uint()
-	} else {
-		v = uint64(rv.Int())
+func ToBool(v reflect.Value) (bool, error) {
+	if IsBool(v) {
+		return v.Bool(), nil
 	}
-
-	return v > 0
+	return false, fmt.Errorf("value(%v) of kind(%s) can not convert to bool", v.Interface(), v.Kind())
 }
 
 func ToPtr(v reflect.Value) reflect.Value {
