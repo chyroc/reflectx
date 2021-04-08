@@ -27,3 +27,10 @@ func ToBool(rv reflect.Value) bool {
 
 	return v > 0
 }
+
+func ToPtr(v reflect.Value) reflect.Value {
+	pt := reflect.PtrTo(v.Type())
+	pv := reflect.New(pt.Elem())
+	pv.Elem().Set(v)
+	return pv
+}
