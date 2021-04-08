@@ -8,7 +8,7 @@ on:
 
 jobs:
 
-  build:
+  ci:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -23,3 +23,9 @@ jobs:
 
     - name: Test
       run: go test -v ./...
+
+    - name: Run Cov
+      run: go test -race -coverprofile=coverage.txt -covermode=atomic
+
+    - name: Upload Cov
+      run: bash <(curl -s https://codecov.io/bash)
