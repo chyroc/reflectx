@@ -5,6 +5,7 @@ import (
 	"reflect"
 )
 
+// ToInt64: convert reflect.Value to int64 value, if invalid, return error
 func ToInt64(v reflect.Value) (int64, error) {
 	if !v.IsValid() {
 		return 0, fmt.Errorf("reflect value is not valid")
@@ -19,6 +20,7 @@ func ToInt64(v reflect.Value) (int64, error) {
 	return 0, fmt.Errorf("value(%v) of kind(%s) can not convert to int64", v.Interface(), v.Kind())
 }
 
+// ToBool: convert reflect.Value to bool value, if invalid, return error
 func ToBool(v reflect.Value) (bool, error) {
 	if IsBool(v) {
 		return v.Bool(), nil
@@ -26,6 +28,7 @@ func ToBool(v reflect.Value) (bool, error) {
 	return false, fmt.Errorf("value(%v) of kind(%s) can not convert to bool", v.Interface(), v.Kind())
 }
 
+// ToPtr: convert reflect.Value to pointer of v value
 func ToPtr(v reflect.Value) reflect.Value {
 	pt := reflect.PtrTo(v.Type())
 	pv := reflect.New(pt.Elem())
