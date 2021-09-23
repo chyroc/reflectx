@@ -8,7 +8,7 @@ import (
 	"github.com/chyroc/go-ptr"
 )
 
-func TestToInt64(t *testing.T) {
+func Test_To(t *testing.T) {
 	tests := []struct {
 		name    string
 		args    reflect.Value

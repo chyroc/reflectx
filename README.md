@@ -34,6 +34,7 @@ reflectx.IsBool(reflect.ValueOf(false))
 ```
 
 - convert reflect.Value to some type
+
 ```go
 // 1, nil
 reflectx.ToInt64(reflect.ValueOf(uint(1)))
@@ -54,6 +55,15 @@ reflectx.ToPtr(reflect.ValueOf(true))
 reflectx.ToPtr(reflect.ValueOf(uint(1)))
 ```
 
-## Dev
+- set value to reflect.Value
 
-- codecov: https://github.com/codecov/example-go
+```go
+var i int // -> 1
+reflectx.SetInt(reflect.ValueOf(&i), 1)
+
+var i uint // -> 2
+reflectx.SetInt(reflect.ValueOf(&i), 2)
+
+var i float6 // -> 1.1
+reflectx.SetInt(reflect.ValueOf(&i), 1.1)
+```
