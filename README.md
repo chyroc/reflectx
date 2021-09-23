@@ -62,8 +62,8 @@ var i int // -> 1
 reflectx.SetInt(reflect.ValueOf(&i), 1)
 
 var i uint // -> 2
-reflectx.SetInt(reflect.ValueOf(&i), 2)
+reflectx.SetUint(reflect.ValueOf(&i), 2)
 
 var i float6 // -> 1.1
-reflectx.SetInt(reflect.ValueOf(&i), 1.1)
+reflectx.SetFloat(reflect.ValueOf(&i), 1.1)
 ```
