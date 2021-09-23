@@ -2,6 +2,7 @@ package reflectx
 
 import (
 	"reflect"
+	"regexp"
 	"testing"
 
 	"github.com/chyroc/go-ptr"
@@ -13,7 +14,14 @@ func TestToInt64(t *testing.T) {
 		args    reflect.Value
 		want    int64
 		wantErr bool
+		errReg  *regexp.Regexp
 	}{
+		{
+			name:    "invalid",
+			args:    reflect.Value{},
+			wantErr: true,
+			errReg:  regexp.MustCompile(`reflect value is not valid`),
+		},
 		{
 			name: "int-1",
 			args: reflect.ValueOf(1),
@@ -94,11 +102,15 @@ func TestToInt64(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got, err := ToInt64(tt.args)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("ToInt64() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("convert error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if tt.wantErr && tt.errReg != nil && !tt.errReg.MatchString(err.Error()) {
+				t.Errorf("convert error want match %s, but got %s", tt.errReg, err)
 				return
 			}
 			if got != tt.want {
-				t.Errorf("ToInt64() got = %v, want %v", got, tt.want)
+				t.Errorf("convert got = %v, want %v", got, tt.want)
 			}
 		})
 	}
